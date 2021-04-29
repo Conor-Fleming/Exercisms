@@ -1,4 +1,4 @@
-// Package twofer implements
+// Package twofer implements functions that allow you to share.
 // https://golang.org/doc/effective_go.html#commentary
 //
 package twofer
