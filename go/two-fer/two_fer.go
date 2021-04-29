@@ -1,11 +1,14 @@
-// Package twofer should have a package comment that summarizes what it's about.
+// Package twofer implements
 // https://golang.org/doc/effective_go.html#commentary
+//
 package twofer
 
-// ShareWith should have a comment documenting it.
+// ShareWith takes a name and gives one to that person, but always two for me
 func ShareWith(name string) string {
 	if name != "" {
-		return "One for " + name + ", one for me."
+		name = "One for " + name + ", one for me."
+	} else {
+		name = "One for you, one for me."
 	}
-	return "One for you, one for me."
+	return name
 }
