@@ -1,19 +1,22 @@
 package diffsquares
 
-import "math"
-
 func SquareOfSum(input int) int {
 	result := 0
-	for i := 0; i < input; i++ {
+	for i := 0; i <= input; i++ {
 		result = i + result
 	}
-	return int(math.Pow(2, float64(result)))
+	return result * result
 }
 
 func SumOfSquares(input int) int {
-
+	result := 0
+	for i := 0; i <= input; i++ {
+		sqr := i * i
+		result += sqr
+	}
+	return result
 }
 
-func Difference(SquareOfSum int, SumOfSquares int) int {
-
+func Difference(input int) int {
+	return SquareOfSum(input) - SumOfSquares(input)
 }
