@@ -64,4 +64,10 @@ var testCases = []struct {
 		0,
 		true,
 	},
+	{ // test with non-ascii characters
+		s1:          "aÃa",
+		s2:          "a🕐a",
+		want:        1,
+		expectError: false,
+	},
 }
