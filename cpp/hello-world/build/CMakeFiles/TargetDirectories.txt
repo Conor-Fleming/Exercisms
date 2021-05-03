@@ -1,0 +1,4 @@
+/Users/conor/Exercism/cpp/hello-world/build/CMakeFiles/rebuild_cache.dir
+/Users/conor/Exercism/cpp/hello-world/build/CMakeFiles/edit_cache.dir
+/Users/conor/Exercism/cpp/hello-world/build/CMakeFiles/test_hello-world.dir
+/Users/conor/Exercism/cpp/hello-world/build/CMakeFiles/hello-world.dir
