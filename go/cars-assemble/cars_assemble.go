@@ -10,11 +10,7 @@ func CalculateWorkingCarsPerHour(productionRate int, successRate float64) float6
 // CalculateWorkingCarsPerMinute calculates how many working cars are
 // produced by the assembly line every minute
 func CalculateWorkingCarsPerMinute(productionRate int, successRate float64) int {
-	//This line giving me issues but not sure why. Will just re-calculate the Per Hour number again within this function
-	//When I learn the cause of error, and address I will re-enstate the use of the function
-	//perHour := CalculateWorkingCarsPerMinute(productionRate, successRate)
-
-	perHour := (float64(successRate/100) * float64(productionRate))
+	perHour := CalculateWorkingCarsPerHour(productionRate, successRate)
 	perminute := int(perHour) / 60
 	return perminute
 }
