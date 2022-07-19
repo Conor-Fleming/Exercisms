@@ -8,10 +8,7 @@ type Frequency map[string]int
 
 func WordCount(phrase string) Frequency {
 	phrase = strings.ToLower(phrase)
-	lastChar := phrase[len(phrase)-1]
-	if lastChar == "'" {
-
-	}
+	phrase = strings.TrimRight(phrase, "'")
 	result := make(map[string]int)
 	noPunc := strings.NewReplacer("' ", " ", " '", " ", ",", " ", ".", " ", ";", " ", "/", " ", ":", "", "!", "", "&", "", "@", "", "$", "", "%", "", "^", "", "' ", "")
 	phrase = noPunc.Replace(phrase)
