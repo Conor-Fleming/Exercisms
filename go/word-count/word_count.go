@@ -1,24 +1,19 @@
 package wordcount
 
 import (
+	"regexp"
 	"strings"
 )
 
 type Frequency map[string]int
 
 func WordCount(phrase string) Frequency {
-	phrase = strings.ToLower(phrase)
-	phrase = strings.TrimRight(phrase, "'")
 	result := make(map[string]int)
-	noPunc := strings.NewReplacer("' ", " ", " '", " ", ",", " ", ".", " ", ";", " ", "/", " ", ":", "", "!", "", "&", "", "@", "", "$", "", "%", "", "^", "", "' ", "")
-	phrase = noPunc.Replace(phrase)
-	words := strings.Fields(phrase)
+	phrase = strings.ToLower(phrase)
+	re := regexp.MustCompile(`\b[\w']+\b`)
+	words := re.FindAllString(phrase, -1)
 	for _, word := range words {
-		if result[word] == 0 {
-			result[word] = 1
-		} else {
-			result[word]++
-		}
+		result[word] += 1
 	}
 	return result
 }
