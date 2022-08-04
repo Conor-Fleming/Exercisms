@@ -20,7 +20,7 @@ func (a Account) Unlock() {
 
 func Open(amount int64) *Account {
 	//panic("Please implement the Open function")
-	if amount <= 0 {
+	if amount < 0 {
 		return nil
 	}
 	newAccount := Account{
@@ -48,6 +48,9 @@ func (a *Account) Deposit(amount int64) (int64, bool) {
 	if a.closed == true {
 		return 0, false
 	}
+	if (a.acctBalance + amount) < 0 {
+		return 0, false
+	}
 	a.acctBalance += amount
 	return a.acctBalance, true
 }
@@ -62,5 +65,4 @@ func (a *Account) Close() (int64, bool) {
 	a.acctBalance = 0
 	a.closed = true
 	return endingBalance, true
-
 }
