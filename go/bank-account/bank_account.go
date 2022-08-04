@@ -7,15 +7,7 @@ import "sync"
 type Account struct {
 	acctBalance int64
 	closed      bool
-	mux         *sync.Mutex
-}
-
-func (a Account) Lock() {
-	a.mux.Lock()
-}
-
-func (a Account) Unlock() {
-	a.mux.Unlock()
+	mux         sync.Mutex
 }
 
 func Open(amount int64) *Account {
@@ -26,15 +18,15 @@ func Open(amount int64) *Account {
 	newAccount := Account{
 		acctBalance: amount,
 		closed:      false,
-		mux:         &sync.Mutex{},
+		//mux:         &sync.Mutex{},
 	}
 	return &newAccount
 }
 
 func (a *Account) Balance() (int64, bool) {
 	//panic("Please implement the Balance function")
-	a.Lock()
-	defer a.Unlock()
+	a.mux.Lock()
+	defer a.mux.Unlock()
 	if a.closed == true {
 		return 0, false
 	}
@@ -42,9 +34,8 @@ func (a *Account) Balance() (int64, bool) {
 }
 
 func (a *Account) Deposit(amount int64) (int64, bool) {
-	//panic("Please implement the Deposit function")
-	a.Lock()
-	defer a.Unlock()
+	a.mux.Lock()
+	defer a.mux.Unlock()
 	if a.closed == true {
 		return 0, false
 	}
@@ -56,8 +47,8 @@ func (a *Account) Deposit(amount int64) (int64, bool) {
 }
 
 func (a *Account) Close() (int64, bool) {
-	a.Lock()
-	defer a.Unlock()
+	a.mux.Lock()
+	defer a.mux.Unlock()
 	if a.closed == true {
 		return 0, false
 	}
