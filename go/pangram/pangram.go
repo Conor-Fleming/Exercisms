@@ -2,6 +2,7 @@ package pangram
 
 import (
 	"strings"
+	"unicode"
 )
 
 func IsPangram(input string) bool {
@@ -11,11 +12,13 @@ func IsPangram(input string) bool {
 	input = strings.ReplaceAll(input, " ", "")
 
 	for _, v := range input {
-		key := string(v)
-		if _, ok := letters[key]; !ok {
-			letters[key] = 1
+		if _, ok := letters[string(v)]; !ok {
+			if unicode.IsLetter(v) {
+				letters[string(v)] = 1
+			}
 		}
 	}
+
 	if len(letters) == 26 {
 		return true
 	}
