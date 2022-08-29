@@ -1,10 +1,14 @@
 package pangram
 
-import "strings"
+import (
+	"strings"
+)
 
 func IsPangram(input string) bool {
-	input = strings.ToLower(input)
 	letters := make(map[string]int)
+
+	input = strings.ToLower(input)
+	input = strings.ReplaceAll(input, " ", "")
 
 	for _, v := range input {
 		key := string(v)
