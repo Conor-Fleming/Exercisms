@@ -1,7 +1,13 @@
 package protein
 
-var ErrStop errors
-var ErrInvalidBase error
+import (
+	"errors"
+
+	"golang.org/x/exp/slices"
+)
+
+var ErrStop = errors.New("The stop signal was given")
+var ErrInvalidBase = errors.New("Sequence not recognized, Invalid Base")
 
 var proteins = map[string]string{
 	"AUG": "Methionine",
@@ -18,9 +24,9 @@ var proteins = map[string]string{
 	"UGU": "Cysteine",
 	"UGC": "Cysteine",
 	"UGG": "Tryptophan",
-	"UAA": ErrStop,
-	"UAG": ErrStop,
-	"UGA": ErrStop,
+	"UAA": "",
+	"UAG": "",
+	"UGA": "",
 }
 
 func FromRNA(rna string) ([]string, error) {
@@ -29,13 +35,19 @@ func FromRNA(rna string) ([]string, error) {
 		return nil, ErrInvalidBase
 	}
 	//iterate string to check each sequence
-	var results []string
-	var check string
-	for i := 0; i < len(rna)/3; i += 3 {
-		check = proteins[rna[i:i+2]]
+	results := make([]string, 0)
+	for len(rna) > 0 {
+		if check, ok := proteins[rna[:3]]; ok {
+			if check == "" {
+				return results, nil
+			}
+			if !slices.Contains(results, check) {
+				results = append(results, check)
+			}
+			rna = rna[3:]
+		}
 	}
-
-	return nil, nil
+	return results, nil
 }
 
 func FromCodon(codon string) (string, error) {
