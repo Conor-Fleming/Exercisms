@@ -3,7 +3,38 @@ package protein
 var ErrStop errors
 var ErrInvalidBase error
 
+var proteins = map[string]string{
+	"AUG": "Methionine",
+	"UUU": "Phenylalanine",
+	"UUC": "Phenylalanine",
+	"UUA": "Leucine",
+	"UUG": "Leucine",
+	"UCU": "Serine",
+	"UCC": "Serine",
+	"UCA": "Serine",
+	"UCG": "Serine",
+	"UAU": "Tyrosine",
+	"UAC": "Tyrosine",
+	"UGU": "Cysteine",
+	"UGC": "Cysteine",
+	"UGG": "Tryptophan",
+	"UAA": ErrStop,
+	"UAG": ErrStop,
+	"UGA": ErrStop,
+}
+
 func FromRNA(rna string) ([]string, error) {
+	//check for correct input length
+	if (len(rna) % 3) != 0 {
+		return nil, ErrInvalidBase
+	}
+	//iterate string to check each sequence
+	var results []string
+	var check string
+	for i := 0; i < len(rna)/3; i += 3 {
+		check = proteins[rna[i:i+2]]
+	}
+
 	return nil, nil
 }
 
