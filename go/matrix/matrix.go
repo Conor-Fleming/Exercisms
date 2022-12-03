@@ -1,6 +1,7 @@
 package matrix
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 )
@@ -9,17 +10,28 @@ type Matrix [][]int
 
 func New(s string) (*Matrix, error) {
 	rows := strings.Split(s, " ")
-	var matrix Matrix
-	for i := 0; i < len(rows)/2; i++ {
-		for y := 0; y < len(rows)/2; y++ {
-			value, err := strconv.Atoi(rows[i])
+	rows = append(rows, "\n")
+	fmt.Println(rows)
+
+	mx := make(Matrix, 0)
+
+	temp := make([]int, 0)
+	for _, v := range rows {
+		if v != "\n" {
+			value, err := strconv.Atoi(v)
 			if err != nil {
 				return nil, err
 			}
-			matrix[i][y] = value
+			temp = append(temp, value)
+			continue
 		}
+		v = ""
+		mx = append(mx, temp)
+		temp = nil
 	}
-	return &matrix, nil
+	fmt.Println(mx)
+
+	return nil, nil
 }
 
 // Cols and Rows must return the results without affecting the matrix.
@@ -32,5 +44,5 @@ func (m *Matrix) Rows() [][]int {
 }
 
 func (m *Matrix) Set(row, col, val int) bool {
-	return true
+	return false
 }
