@@ -1,7 +1,6 @@
 package matrix
 
 import (
-	"fmt"
 	"strconv"
 	"strings"
 )
@@ -9,29 +8,24 @@ import (
 type Matrix [][]int
 
 func New(s string) (*Matrix, error) {
-	rows := strings.Split(s, " ")
-	rows = append(rows, "\n")
-	fmt.Println(rows)
+	s = strings.ReplaceAll(s, "\n", " . ")
+	rowCount := strings.Count(s, ".")
+	lines := strings.Split(s, " ")
+	mx := make(Matrix, rowCount+1)
 
-	mx := make(Matrix, 0)
-
-	temp := make([]int, 0)
-	for _, v := range rows {
-		if v != "\n" {
-			value, err := strconv.Atoi(v)
-			if err != nil {
-				return nil, err
-			}
-			temp = append(temp, value)
+	i := 0
+	for _, val := range lines {
+		if val == "." {
+			i++
 			continue
 		}
-		v = ""
-		mx = append(mx, temp)
-		temp = nil
+		val, _ := strconv.Atoi(string(val))
+		mx[i] = append(mx[i], val)
 	}
-	fmt.Println(mx)
 
-	return nil, nil
+	//fmt.Println(mx)
+
+	return &mx, nil
 }
 
 // Cols and Rows must return the results without affecting the matrix.
