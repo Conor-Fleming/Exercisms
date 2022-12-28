@@ -58,7 +58,7 @@ func New(s string) (*Matrix, error) {
 func (m *Matrix) Cols() [][]int {
 	lenCheck := len((*m)[0])
 	colsRes := make([][]int, lenCheck)
-	for i := range *m {
+	for i := 0; i < lenCheck; i++ {
 		for y := 0; y < len(*m); y++ {
 			colsRes[i] = append(colsRes[i], (*m)[y][i])
 		}
@@ -80,6 +80,13 @@ func (m *Matrix) Rows() [][]int {
 }
 
 func (m *Matrix) Set(row, col, val int) bool {
+	if row >= len(*m) || row < 0 {
+		return false
+	}
+	if col >= len((*m)[0]) || col < 0 {
+		return false
+	}
+
 	(*m)[row][col] = val
 	return true
 }
