@@ -1,6 +1,8 @@
 package matrix
 
 import (
+	"errors"
+	"fmt"
 	"strconv"
 	"strings"
 )
@@ -8,12 +10,25 @@ import (
 type Matrix [][]int
 
 func New(s string) (*Matrix, error) {
-	//need to do some error checking for:
-	// int overflows (long integers), uneven rows, empty rows, non ints and non numerics
-	//basic string manipulation to enable easy parsing
-	s = strings.ReplaceAll(s, "\n", " . ")
-	rowCount := strings.Count(s, ".")
+	//basic error checking for invalid entrys
+	if s[0] == '\n' || s[len(s)-1] == '\n' {
+		return nil, errors.New("Invalid Entry")
+	}
+
+	if !strings.Contains(s, " ") && !strings.Contains(s, "\n") && len(s) > 1 {
+		return nil, errors.New("Invalid Entry")
+	}
+
+	s = strings.ReplaceAll(s, "\n", " ! ")
+	rowCount := strings.Count(s, "!")
 	lines := strings.Split(s, " ")
+	for i, v := range lines {
+		if v == "!" {
+			if lines[i+1] == "!" || lines[i-1] == "!" {
+				return nil, errors.New("Invalid Entry")
+			}
+		}
+	}
 
 	//create matrix so store values
 	mx := make(Matrix, rowCount+1)
@@ -22,7 +37,7 @@ func New(s string) (*Matrix, error) {
 	//loop range of string and add to matrix row
 	for _, val := range lines {
 		// the current value is the newline marker (".") then increment matrix row with i++
-		if val == "." {
+		if val == "!" {
 			i++
 			continue
 		}
@@ -30,18 +45,46 @@ func New(s string) (*Matrix, error) {
 		mx[i] = append(mx[i], val)
 	}
 
+	length := len(mx[0])
+	for _, v := range mx {
+		if length != len(v) {
+			return nil, errors.New("Uneven Rows")
+		}
+	}
+
 	return &mx, nil
 }
 
-// Cols and Rows must return the results without affecting the matrix.
+// Cols and Rows must return the result without affecting the matrix.
 func (m *Matrix) Cols() [][]int {
-	return nil
+	lenCheck := len(*m)
+	fmt.Println(m)
+	colsRes := make([][]int, lenCheck)
+	fmt.Println(colsRes)
+	for i, v := range *m {
+		for y := range v {
+			colsRes[i] = append(colsRes[i], (*m)[y][i])
+		}
+	}
+
+	return colsRes
 }
 
 func (m *Matrix) Rows() [][]int {
-	return nil
+	lenCheck := len(*m)
+	fmt.Println(m)
+	rowRes := make([][]int, lenCheck)
+	fmt.Println(rowRes)
+	for i, v := range *m {
+		for y := range v {
+			rowRes[i] = append(rowRes[i], (*m)[i][y])
+		}
+	}
+
+	return rowRes
 }
 
 func (m *Matrix) Set(row, col, val int) bool {
-	return false
+	(*m)[row][col] = val
+	return true
 }
