@@ -2,7 +2,6 @@ package matrix
 
 import (
 	"errors"
-	"fmt"
 	"strconv"
 	"strings"
 )
@@ -57,12 +56,10 @@ func New(s string) (*Matrix, error) {
 
 // Cols and Rows must return the result without affecting the matrix.
 func (m *Matrix) Cols() [][]int {
-	lenCheck := len(*m)
-	fmt.Println(m)
+	lenCheck := len((*m)[0])
 	colsRes := make([][]int, lenCheck)
-	fmt.Println(colsRes)
-	for i, v := range *m {
-		for y := range v {
+	for i := range *m {
+		for y := 0; y < len(*m); y++ {
 			colsRes[i] = append(colsRes[i], (*m)[y][i])
 		}
 	}
@@ -72,9 +69,7 @@ func (m *Matrix) Cols() [][]int {
 
 func (m *Matrix) Rows() [][]int {
 	lenCheck := len(*m)
-	fmt.Println(m)
 	rowRes := make([][]int, lenCheck)
-	fmt.Println(rowRes)
 	for i, v := range *m {
 		for y := range v {
 			rowRes[i] = append(rowRes[i], (*m)[i][y])
