@@ -8,7 +8,7 @@ import (
 
 type Matrix [][]int
 
-func New(s string) (*Matrix, error) {
+func New(s string) (Matrix, error) {
 	//basic error checking for invalid entrys
 	if s[0] == '\n' || s[len(s)-1] == '\n' {
 		return nil, errors.New("Invalid Entry")
@@ -18,6 +18,7 @@ func New(s string) (*Matrix, error) {
 		return nil, errors.New("Invalid Entry")
 	}
 
+	s = strings.ReplaceAll(s, "\n ", "\n")
 	s = strings.ReplaceAll(s, "\n", " ! ")
 	rowCount := strings.Count(s, "!")
 	lines := strings.Split(s, " ")
@@ -51,7 +52,7 @@ func New(s string) (*Matrix, error) {
 		}
 	}
 
-	return &mx, nil
+	return mx, nil
 }
 
 // Cols and Rows must return the result without affecting the matrix.
