@@ -1,6 +1,6 @@
 package erratum
 
-func Use(opener ResourceOpener, input string) error {
+func Use(opener ResourceOpener, input string) (err error) {
 	newResource, err := opener()
 	if err != nil {
 		if _, ok := err.(TransientError); ok {
@@ -14,9 +14,11 @@ func Use(opener ResourceOpener, input string) error {
 			if frob, ok := r.(FrobError); ok {
 				newResource.Defrob(frob.defrobTag)
 			}
+			err = r.(error)
 		}
 		newResource.Close()
 	}()
+
 	newResource.Frob(input)
-	return err
+	return
 }
