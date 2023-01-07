@@ -4,18 +4,42 @@ type Ints []int
 type Lists [][]int
 type Strings []string
 
-func (i Ints) Keep(filter func(int) bool) Ints {
-	panic("Please implement the Keep function")
+func (ints Ints) Keep(filter func(int) bool) Ints {
+	var result Ints
+	for _, v := range ints {
+		if filter(v) {
+			result = append(result, v)
+		}
+	}
+	return result
 }
 
-func (i Ints) Discard(filter func(int) bool) Ints {
-	panic("Please implement the Discard function")
+func (ints Ints) Discard(filter func(int) bool) Ints {
+	var result Ints
+	for _, v := range ints {
+		if !filter(v) {
+			result = append(result, v)
+		}
+	}
+	return result
 }
 
-func (l Lists) Keep(filter func([]int) bool) Lists {
-	panic("Please implement the Keep function")
+func (lists Lists) Keep(filter func([]int) bool) Lists {
+	var result Lists
+	for _, v := range lists {
+		if filter(v) {
+			result = append(result, v)
+		}
+	}
+	return result
 }
 
-func (s Strings) Keep(filter func(string) bool) Strings {
-	panic("Please implement the Keep function")
+func (strings Strings) Keep(filter func(string) bool) Strings {
+	var result Strings
+	for _, v := range strings {
+		if filter(v) {
+			result = append(result, v)
+		}
+	}
+	return result
 }
