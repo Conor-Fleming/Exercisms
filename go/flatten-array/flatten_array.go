@@ -9,7 +9,7 @@ func Flatten(nested interface{}) []interface{} {
 		case nil:
 			continue
 		case []interface{}:
-			output = append(output, Flatten(val))
+			output = append(output, Flatten(val)...)
 		default:
 			output = append(output, val)
 		}
