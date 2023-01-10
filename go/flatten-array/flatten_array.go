@@ -2,20 +2,18 @@ package flatten
 
 func Flatten(nested interface{}) []interface{} {
 	output := make([]interface{}, 0)
-	loop(nested, output)
-	return output
-}
+	result := nested.([]interface{})
 
-func loop(t interface{}, output []interface{}) {
-
-	switch t := t.(type) {
-	case int:
-		output = append(output, t)
-	case []int:
-		for _, v := range t {
-			output = append(output, v)
+	for _, val := range result {
+		switch val.(type) {
+		case nil:
+			continue
+		case []interface{}:
+			output = append(output, Flatten(val))
+		default:
+			output = append(output, val)
 		}
-	case []interface{}:
-		loop(t, output)
 	}
+
+	return output
 }
