@@ -6,22 +6,19 @@ import (
 
 func RunLengthEncode(input string) string {
 	var output string
-	for i := 0; i < len(input); i++ {
-		elem := input[i]
-		count := 1
-		for j := i + 1; j < len(input); j++ {
-			if input[j] == elem {
-				count++
-				continue
-			}
-			i = j - 1
-			break
-		}
-		if count == 1 {
-			output += string(elem)
+	count := 1
+	for i, v := range input {
+		if i < len(input)-1 && byte(v) == input[i+1] {
+			count += 1
 			continue
 		}
-		output += strconv.Itoa(count) + string(elem)
+		if count > 1 {
+			output += strconv.Itoa(count)
+		}
+		output += string(v)
+
+		//reset counter upon finding a non match
+		count = 1
 	}
 
 	return output
