@@ -8,12 +8,14 @@ namespace reverse_string
         {
             return input;
         }
-        string result = "\0";
-        for (int i = input.length(); i >= 0; i--)
+
+        string result;
+        for (int i = input.length() - 1; i >= 0; i--)
         {
-            result += tolower(input[i]);
+            result += input[i];
         }
 
+        cout << result << endl;
         return result;
     }
 }

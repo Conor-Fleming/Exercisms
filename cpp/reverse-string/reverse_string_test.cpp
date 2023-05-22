@@ -14,7 +14,6 @@ TEST_CASE("a_word")
 {
     REQUIRE("tobor" == reverse_string::reverse_string("robot"));
 }
-#if defined(EXERCISM_RUN_ALL_TESTS)
 
 TEST_CASE("a_capitalized_word")
 {
@@ -30,4 +29,5 @@ TEST_CASE("a_palindrome")
 {
     REQUIRE("racecar" == reverse_string::reverse_string("racecar"));
 }
+#if defined(EXERCISM_RUN_ALL_TESTS)
 #endif
