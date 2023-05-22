@@ -4,12 +4,16 @@ namespace reverse_string
 {
     string reverse_string(string input)
     {
-        string result = "";
-        for (int i = input.length(); i > 0; i--)
+        if (input.length() == 0)
         {
-            result += input[i];
+            return input;
+        }
+        string result = "\0";
+        for (int i = input.length(); i >= 0; i--)
+        {
+            result += tolower(input[i]);
         }
 
         return result;
     }
-} // namespace reverse_string
+}

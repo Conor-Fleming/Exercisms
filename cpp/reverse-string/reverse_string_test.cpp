@@ -10,11 +10,11 @@ TEST_CASE("an_empty_string")
     REQUIRE("" == reverse_string::reverse_string(""));
 }
 
-#if defined(EXERCISM_RUN_ALL_TESTS)
 TEST_CASE("a_word")
 {
     REQUIRE("tobor" == reverse_string::reverse_string("robot"));
 }
+#if defined(EXERCISM_RUN_ALL_TESTS)
 
 TEST_CASE("a_capitalized_word")
 {
@@ -28,6 +28,6 @@ TEST_CASE("a_sentence_with_punctuation")
 
 TEST_CASE("a_palindrome")
 {
-   REQUIRE("racecar" == reverse_string::reverse_string("racecar"));
+    REQUIRE("racecar" == reverse_string::reverse_string("racecar"));
 }
 #endif
