@@ -6,6 +6,12 @@
 
 #IncludeRegexTransform: 
 
+/home/conor/exercism/cpp/space-age/space_age.cpp
+space_age.h
+/home/conor/exercism/cpp/space-age/space_age.h
+iostream
+-
+
 /home/conor/exercism/cpp/space-age/space_age.h
 
 /home/conor/exercism/cpp/space-age/space_age_test.cpp
