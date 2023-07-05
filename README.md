@@ -9,6 +9,7 @@ This repository contains my work/solutions on the Exercism language tracks. Chec
 
 #### C++
 
-#### Ruby
+#### C#
 
-#### Rust
+
+
