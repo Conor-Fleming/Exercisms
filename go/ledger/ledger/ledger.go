@@ -14,21 +14,19 @@ type Entry struct {
 }
 
 func FormatLedger(currency string, locale string, entries []Entry) (string, error) {
-	var entriesCopy []Entry
-
-	//do we need to iterate here?
-	for _, e := range entries {
-		entriesCopy = append(entriesCopy, e)
+	//checking inputs
+	if currency != "USD" && currency != "EUR" {
+		return "", errors.New("invalid currency given")
 	}
 
-	//not sure why we need this function but if it is necessary
-	//the format should be changed to the standard go error handling style
+	//change 2 cleaning this up
+	entriesCopy := make([]Entry, len(entries))
+	copy(entriesCopy, entries)
 
-	if len(entries) == 0 {
-		_, err := FormatLedger(currency, "en-US", []Entry{{Date: "2014-01-01", Description: "", Change: 0}})
-		if err != nil {
-			return "", err
-		}
+	//draw headers
+	s, err := drawHeaders(locale)
+	if err != nil {
+		return "", err
 	}
 
 	//look into utilizing some more descriptive variable names
@@ -53,12 +51,6 @@ func FormatLedger(currency string, locale string, entries []Entry) (string, erro
 			}
 		}
 		es = es[1:]
-	}
-
-	//Task 1 done
-	s, err := drawHeaders(locale)
-	if err != nil {
-		return "", err
 	}
 
 	// Parallelism, always a great idea
