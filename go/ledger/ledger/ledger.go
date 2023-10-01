@@ -19,8 +19,13 @@ func FormatLedger(currency string, locale string, entries []Entry) (string, erro
 	for _, e := range entries {
 		entriesCopy = append(entriesCopy, e)
 	}
+
+	//not sure why we need this function but if it is necessary
+	//the format should be changed to the standard go error handling style
+
 	if len(entries) == 0 {
-		if _, err := FormatLedger(currency, "en-US", []Entry{{Date: "2014-01-01", Description: "", Change: 0}}); err != nil {
+		_, err := FormatLedger(currency, "en-US", []Entry{{Date: "2014-01-01", Description: "", Change: 0}})
+		if err != nil {
 			return "", err
 		}
 	}
@@ -31,6 +36,8 @@ func FormatLedger(currency string, locale string, entries []Entry) (string, erro
 
 	//why new slice?
 	es := entriesCopy
+
+	//bubble sort esq
 	for len(es) > 1 {
 		first, rest := es[0], es[1:]
 		success := false
@@ -66,12 +73,14 @@ func FormatLedger(currency string, locale string, entries []Entry) (string, erro
 	} else {
 		return "", errors.New("")
 	}
+
 	// Parallelism, always a great idea
 	co := make(chan struct {
 		i int
 		s string
 		e error
 	})
+
 	for i, et := range entriesCopy {
 		go func(i int, entry Entry) {
 			if len(entry.Date) != 10 {
@@ -81,6 +90,7 @@ func FormatLedger(currency string, locale string, entries []Entry) (string, erro
 					e error
 				}{e: errors.New("")}
 			}
+
 			d1, d2, d3, d4, d5 := entry.Date[0:4], entry.Date[4], entry.Date[5:7], entry.Date[7], entry.Date[8:10]
 			if d2 != '-' {
 				co <- struct {
@@ -89,6 +99,7 @@ func FormatLedger(currency string, locale string, entries []Entry) (string, erro
 					e error
 				}{e: errors.New("")}
 			}
+
 			if d4 != '-' {
 				co <- struct {
 					i int
@@ -96,6 +107,7 @@ func FormatLedger(currency string, locale string, entries []Entry) (string, erro
 					e error
 				}{e: errors.New("")}
 			}
+
 			de := entry.Description
 			if len(de) > 25 {
 				de = de[:22] + "..."
@@ -216,6 +228,7 @@ func FormatLedger(currency string, locale string, entries []Entry) (string, erro
 				strings.Repeat(" ", 13-al) + a + "\n"}
 		}(i, et)
 	}
+
 	ss := make([]string, len(entriesCopy))
 	for range entriesCopy {
 		v := <-co
