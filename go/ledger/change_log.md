@@ -1,5 +1,2 @@
 Ledger Refactor
-
--validate the currency and locale params as they are passed in. Per readme we only have two options for each
-
--
+-re-wrote confusing code block to draw the headers of ledger. Put in own function "drawHeaders" and also utilized Go fmt.Sprintf function

@@ -2,6 +2,8 @@ package ledger
 
 import (
 	"errors"
+	"fmt"
+	"log"
 	"strconv"
 	"strings"
 )
@@ -55,23 +57,9 @@ func FormatLedger(currency string, locale string, entries []Entry) (string, erro
 		es = es[1:]
 	}
 
-	var s string
-	if locale == "nl-NL" {
-		s = "Datum" +
-			strings.Repeat(" ", 10-len("Datum")) +
-			" | " +
-			"Omschrijving" +
-			strings.Repeat(" ", 25-len("Omschrijving")) +
-			" | " + "Verandering" + "\n"
-	} else if locale == "en-US" {
-		s = "Date" +
-			strings.Repeat(" ", 10-len("Date")) +
-			" | " +
-			"Description" +
-			strings.Repeat(" ", 25-len("Description")) +
-			" | " + "Change" + "\n"
-	} else {
-		return "", errors.New("")
+	s, err := drawHeaders(locale)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// Parallelism, always a great idea
@@ -241,4 +229,15 @@ func FormatLedger(currency string, locale string, entries []Entry) (string, erro
 		s += ss[i]
 	}
 	return s, nil
+}
+
+func drawHeaders(locale string) (string, error) {
+	switch locale {
+	case "nl-NL":
+		return fmt.Sprintf("%-10s | %-25s | %s\n", "Datum", "Omschrijving", "Verandering"), nil
+	case "en-US":
+		return fmt.Sprintf("%-10s | %-25s | %s\n", "Date", "Description", "Change"), nil
+	default:
+		return "", fmt.Errorf("Given locale not recognized - expected en-US or nl-NL, got: %v", locale)
+	}
 }
