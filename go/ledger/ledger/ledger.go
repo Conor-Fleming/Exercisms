@@ -57,6 +57,7 @@ func FormatLedger(currency string, locale string, entries []Entry) (string, erro
 		es = es[1:]
 	}
 
+	//Task 1 done
 	s, err := drawHeaders(locale)
 	if err != nil {
 		log.Fatal(err)
