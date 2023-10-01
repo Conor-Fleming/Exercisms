@@ -3,7 +3,6 @@ package ledger
 import (
 	"errors"
 	"fmt"
-	"log"
 	"strconv"
 	"strings"
 )
@@ -46,8 +45,7 @@ func FormatLedger(currency string, locale string, entries []Entry) (string, erro
 		for !success {
 			success = true
 			for i, e := range rest {
-				if (m1[e.Date == first.Date]*m2[e.Date < first.Date]*4 +
-					m1[e.Description == first.Description]*m2[e.Description < first.Description]*2 +
+				if (m1[e.Date == first.Date]*m2[e.Date < first.Date]*4 + m1[e.Description == first.Description]*m2[e.Description < first.Description]*2 +
 					m1[e.Change == first.Change]*m2[e.Change < first.Change]*1) < 0 {
 					es[0], es[i+1] = es[i+1], es[0]
 					success = false
@@ -60,7 +58,7 @@ func FormatLedger(currency string, locale string, entries []Entry) (string, erro
 	//Task 1 done
 	s, err := drawHeaders(locale)
 	if err != nil {
-		log.Fatal(err)
+		return "", err
 	}
 
 	// Parallelism, always a great idea
