@@ -19,6 +19,8 @@ func New() Set {
 }
 
 func NewFromSlice(l []string) Set {
+	l = removeDuplicates(l)
+
 	return Set{
 		val: l,
 	}
@@ -28,11 +30,11 @@ func (s Set) String() string {
 	var output string
 	output += "{"
 	for i, v := range s.val {
-		if i >= len(s.val)-2 {
+		if i == len(s.val)-1 {
 			output += fmt.Sprintf(`"%v"`, v)
 			continue
 		}
-		output += fmt.Sprintf(`"%v, "`, v)
+		output += fmt.Sprintf(`"%v", `, v)
 	}
 	output += "}"
 
@@ -58,25 +60,90 @@ func (s *Set) Add(elem string) {
 }
 
 func Subset(s1, s2 Set) bool {
-	panic("Please implement the Subset function")
+	seen := make(map[string]bool)
+	for _, v := range s2.val {
+		seen[v] = true
+	}
+
+	for _, item := range s1.val {
+		if !seen[item] {
+			return false
+		}
+	}
+
+	return true
 }
 
 func Disjoint(s1, s2 Set) bool {
-	panic("Please implement the Disjoint function")
+	for _, v := range s2.val {
+		if s1.Has(v) {
+			return false
+		}
+	}
+
+	return true
 }
 
 func Equal(s1, s2 Set) bool {
-	panic("Please implement the Equal function")
+	for _, v := range s2.val {
+		if !s1.Has(v) {
+			return false
+		}
+	}
+
+	for _, v := range s1.val {
+		if !s2.Has(v) {
+			return false
+		}
+	}
+
+	return true
 }
 
 func Intersection(s1, s2 Set) Set {
-	panic("Please implement the Intersection function")
+	var result = Set{}
+
+	for _, v := range s1.val {
+		if s2.Has(v) {
+			result.val = append(result.val, v)
+		}
+	}
+
+	return result
 }
 
 func Difference(s1, s2 Set) Set {
-	panic("Please implement the Difference function")
+	result := Set{}
+	for _, v := range s1.val {
+		if !s2.Has(v) {
+			result.val = append(result.val, v)
+		}
+	}
+
+	return result
 }
 
 func Union(s1, s2 Set) Set {
-	panic("Please implement the Union function")
+	result := s1
+	for _, v := range s2.val {
+		if !result.Has(v) {
+			result.val = append(result.val, v)
+		}
+	}
+
+	return result
+}
+
+func removeDuplicates(slice []string) []string {
+	seen := make(map[string]bool)
+	result := []string{}
+
+	for _, item := range slice {
+		if !seen[item] {
+			seen[item] = true
+			result = append(result, item)
+		}
+	}
+
+	return result
 }
