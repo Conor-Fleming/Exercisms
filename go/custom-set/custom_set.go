@@ -1,5 +1,7 @@
 package stringset
 
+import "fmt"
+
 // Implement Set as a collection of unique string values.
 //
 // For Set.String, use '{' and '}', output elements as double-quoted strings
@@ -8,29 +10,51 @@ package stringset
 // Format the empty set as {}.
 
 // Define the Set type here.
+type Set struct {
+	val []string
+}
 
 func New() Set {
-	panic("Please implement the New function")
+	return Set{}
 }
 
 func NewFromSlice(l []string) Set {
-	panic("Please implement the NewFromSlice function")
+	return Set{
+		val: l,
+	}
 }
 
 func (s Set) String() string {
-	panic("Please implement the String function")
+	var output string
+	output += "{"
+	for i, v := range s.val {
+		if i >= len(s.val)-2 {
+			output += fmt.Sprintf(`"%v"`, v)
+			continue
+		}
+		output += fmt.Sprintf(`"%v, "`, v)
+	}
+	output += "}"
+
+	return output
 }
 
 func (s Set) IsEmpty() bool {
-	panic("Please implement the IsEmpty function")
+	return len(s.val) == 0
 }
 
 func (s Set) Has(elem string) bool {
-	panic("Please implement the Has function")
+	for _, v := range s.val {
+		if v == elem {
+			return true
+		}
+	}
+
+	return false
 }
 
-func (s Set) Add(elem string) {
-	panic("Please implement the Add function")
+func (s *Set) Add(elem string) {
+	s.val = append(s.val, elem)
 }
 
 func Subset(s1, s2 Set) bool {
