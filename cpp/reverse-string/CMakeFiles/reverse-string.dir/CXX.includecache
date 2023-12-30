@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/conor/exercism/cpp/reverse-string/reverse_string.cpp
+reverse_string.h
+/home/conor/exercism/cpp/reverse-string/reverse_string.h
+
+/home/conor/exercism/cpp/reverse-string/reverse_string.h
+string
+-
+iostream
+-
+

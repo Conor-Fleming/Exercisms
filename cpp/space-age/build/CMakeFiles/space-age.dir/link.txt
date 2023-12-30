@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/space-age.dir/space_age_test.cpp.o CMakeFiles/space-age.dir/space_age.cpp.o CMakeFiles/space-age.dir/test/tests-main.cpp.o  -o space-age 

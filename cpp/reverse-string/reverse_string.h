@@ -2,11 +2,12 @@
 #define REVERSE_STRING_H
 
 #include <string>
+#include <iostream>
 using namespace std;
 
 namespace reverse_string
 {
     string reverse_string(string);
-} // namespace reverse_string
+}
 
-#endif // REVERSE_STRING_H
+#endif
