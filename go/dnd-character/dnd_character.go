@@ -16,30 +16,11 @@ type Character struct {
 
 // Modifier calculates the ability modifier for a given ability score
 func Modifier(score int) int {
-	return 0
+	return int(10 + float64((score-10)/2))
 }
 
 // Ability uses randomness to generate the score for an ability
 func Ability() int {
-	return 0
-}
-
-// GenerateCharacter creates a new Character with random scores for abilities
-func GenerateCharacter() Character {
-	character := Character{
-		Strength:     GenerateSum(),
-		Dexterity:    GenerateSum(),
-		Constitution: GenerateSum(),
-		Intelligence: GenerateSum(),
-		Wisdom:       GenerateSum(),
-		Charisma:     GenerateSum(),
-	}
-
-	character.Hitpoints = int(10 + float64((character.Constitution-10)/2))
-	return character
-}
-
-func GenerateSum() int {
 	rollValues := make([]int, 4)
 
 	//4 rolls of the dice
@@ -64,4 +45,19 @@ func GenerateSum() int {
 	}
 
 	return score
+}
+
+// GenerateCharacter creates a new Character with random scores for abilities
+func GenerateCharacter() Character {
+	character := Character{
+		Strength:     Ability(),
+		Dexterity:    Ability(),
+		Constitution: Ability(),
+		Intelligence: Ability(),
+		Wisdom:       Ability(),
+		Charisma:     Ability(),
+	}
+
+	character.Hitpoints = Modifier(character.Constitution)
+	return character
 }
